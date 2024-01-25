@@ -113,6 +113,11 @@ class ULListStr {
    */
   void clear();
 
+
+  //added content
+  //print contents
+  void print()const;
+
  private:
   /** 
    * Returns a pointer to the item at index, loc,
