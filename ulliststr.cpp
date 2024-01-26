@@ -59,42 +59,6 @@ void ULListStr::push_back(const std::string& val){
   size_++;
 }
 
-  // //if there is nothing in the list yet
-  // if(!tail_){
-  //   //create a new Item
-  //   tail_ = new Item();
-  //   //set head pointer to point to the new Item
-  //   head_ = tail_;
-  //   //move last to 1
-  //   head_->last = 1;
-  //   //insert val at 0
-  //   head_->val[0] = val;
-
-  //   size_++;
-  //   return;
-  // }
-  // //check if tail is full
-  // if(tail_->last == ARRSIZE){
-  //   //create a new Item
-  //   tail_->next = new Item();
-  //   //update previous in the new Item
-  //   tail_->next->prev = tail_;
-  //   //point tail to the new Item
-  //   tail_ = tail_->next;
-  //   //initialize val at 0th index to val passed in
-  //   tail_->val[0] = val;
-  //   //increment last
-  //   tail_->last++;
-  // }
-  // //if tail is not full
-  // else{
-  //   //assign val to last index of array and increment last
-  //   tail_->val[tail_->last++] = val;
-  // }
-
-  // size_++;
-  //}
-
 void ULListStr::push_front(const std::string& val){
   //check if there is a ullist
 if(head_ == nullptr){
@@ -119,45 +83,10 @@ else if(head_->first == 0){
 }
 
 else{
-
+  head_->val[--head_->first] = val;
 }
 
-
-
-  // if(!head_){
-  //   //create a new Item
-  //   head_ = new Item();
-  //   //set head pointer to point to the new Item
-  //   tail_ = head_;
-  //   //set first and last to proper value
-  //   head_->first = ARRSIZE - 1;
-  //   head_->last = ARRSIZE;
-  //   //insert val
-  //   head_->val[head_->first] = val;
-
-  //   size_++;
-  //   return;
-  // }
-  // //check if head is full
-  // if(head_->last == ARRSIZE){
-  //   //create a new Item
-  //   head_->prev = new Item();
-  //   //update next in the new Item
-  //   head_->prev->next = head_;
-  //   //assign head to the new Item
-  //   head_ = head_->prev;
-  //   //update first and last
-  //   head_->first = ARRSIZE - 1;
-  //   head_->last = ARRSIZE;
-  //   //insert val
-  //   head_->val[head_->first] = val;
-  // }
-  // //if head is not full
-  // else{
-  //   //assign val to the first index of the array and increment first
-  //   head_->val[--head_->first] = val;
-  // }
-  // size_++;
+size_++;
 }
 
 void ULListStr::pop_back(){
@@ -169,6 +98,8 @@ void ULListStr::pop_back(){
   //check if there is only one element
   if(tail_->last == 1){
     //check if there is only one node
+
+    //remove != condition?
     if(head_ == tail_ && head_ != nullptr){
       //delete node and make head and tail pointers null
       delete head_;
@@ -196,28 +127,55 @@ void ULListStr::pop_back(){
 }
 
 void ULListStr::pop_front(){
+  //check if there is an unrolled linked list
+  if(head_ == nullptr){
+    return;
+  }
+
   //check if there is only one element
-  if(head_->first == ARRSIZE - 1){
+  if(head_->first == head_->last - 1){
     //check if there is only one node
-    if(head_ == tail_){
-      //delete node and make head and tail pointers null
+    //remove != condition?
+    if(head_ == tail_ && head_ != nullptr){
       delete head_;
       head_ = nullptr;
       tail_ = nullptr;
+      size_ = 0;
       return;
-  }
-    //move head forward one
+    }
+
     head_ = head_->next;
-    //delete old head
-    delete head_->prev;
-    //update prev to nullptr
+    delete  head_->prev;
     head_->prev = nullptr;
   }
   else{
-    //increment first
     head_->first++;
   }
   size_--;
+
+
+  // //check if there is only one element
+  // if(head_->first == ARRSIZE - 1){
+  //   //check if there is only one node
+  //   if(head_ == tail_){
+  //     //delete node and make head and tail pointers null
+  //     delete head_;
+  //     head_ = nullptr;
+  //     tail_ = nullptr;
+  //     return;
+  // }
+  //   //move head forward one
+  //   head_ = head_->next;
+  //   //delete old head
+  //   delete head_->prev;
+  //   //update prev to nullptr
+  //   head_->prev = nullptr;
+  // }
+  // else{
+  //   //increment first
+  //   head_->first++;
+  // }
+  // size_--;
 }
 
 std::string const& ULListStr::back() const{
